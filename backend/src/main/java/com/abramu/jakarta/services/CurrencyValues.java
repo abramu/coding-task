@@ -1,4 +1,4 @@
-package com.abramu.jakarta.currencysplitter;
+package com.abramu.jakarta.services;
 
 import java.math.BigDecimal;
 import java.util.Comparator;

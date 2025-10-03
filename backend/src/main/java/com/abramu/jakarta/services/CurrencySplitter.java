@@ -1,13 +1,13 @@
-package com.abramu.jakarta.currencysplitter;
+package com.abramu.jakarta.services;
 
 import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
 
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 
-@RequestScoped
+@ApplicationScoped
 public class CurrencySplitter {
     
     /**

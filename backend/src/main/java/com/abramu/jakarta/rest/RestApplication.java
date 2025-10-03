@@ -1,4 +1,4 @@
-package com.abramu.jakarta.currencysplitter;
+package com.abramu.jakarta.rest;
 
 import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.ApplicationPath;
