@@ -1,7 +1,7 @@
-package com.abramu.jakarta.hello;
+package com.abramu.jakarta.currencysplitter;
 
 import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.ApplicationPath;
 
 @ApplicationPath("api")
-public class HelloApplication extends Application {}
+public class RestApplication extends Application {}
