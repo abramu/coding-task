@@ -1,8 +1,7 @@
 package com.abramu.jakarta.currencysplitter;
 
+import java.math.BigDecimal;
 import java.util.List;
-
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
@@ -14,12 +13,11 @@ import jakarta.ws.rs.core.MediaType;
 public class CurrencyValuesResource {
 
     @Inject
-    @ConfigProperty(name = "currency.values")
-    private List<Double> valuesList;
+    private CurrencyValues currencyValues;
 
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
-    public CurrencyValues values() {
-        return new CurrencyValues(valuesList);
+    public List<BigDecimal> getCurrencyValues() {
+        return currencyValues.getValues();
     }
 }
