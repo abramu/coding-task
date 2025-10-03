@@ -1,14 +1,5 @@
 package com.abramu.jakarta.hello;
 
-public class Hello {
+import java.util.List;
 
-    private String name;
-
-    public Hello(String name) {
-        this.name = name;
-    }
-
-    public String getHello(){
-        return name;
-    }
-}
+public record Hello(List<Double> values) {}

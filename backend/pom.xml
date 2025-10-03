@@ -20,6 +20,7 @@
         <compiler-plugin.version>3.13.0</compiler-plugin.version>
         <war-plugin.version>3.4.0</war-plugin.version>
         <wildfly-plugin.version>5.0.1.Final</wildfly-plugin.version>
+        <microprofile.version>3.1</microprofile.version>
     </properties>
 
     <dependencies>
@@ -27,6 +28,12 @@
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-web-api</artifactId>
             <version>${jakartaee-api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.microprofile.config</groupId>
+            <artifactId>microprofile-config-api</artifactId>
+            <version>${microprofile.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
