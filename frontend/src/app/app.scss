@@ -1,0 +1,16 @@
+main {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8em;
+  padding: 4em;
+
+  div.column {
+    display: flex;
+    flex-direction: column;
+    gap: 4em;
+  }
+
+  input {
+    text-align: right;
+  }
+}
