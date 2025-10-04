@@ -1,7 +1,8 @@
 package com.abramu.jakarta.services;
 
 import java.math.BigDecimal;
-import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,15 +14,15 @@ public class CurrencySplitter {
     /**
      * Optimally splits a provided sum of money into banknotes and coins.
      * The possible values of all banknotes/coins must be provided in descending order, e.g. "5, 2, 1".
-     * The result is a LinkedHashMap with the required banknote/coin values (in descending order) as keys.
+     * The result is a Map with the required banknote/coin values as keys.
      * The associated value is the required amount of that specific banknote/coin.
      * 
      * @param total The sum of money to be split.
      * @param currencyValues All values of the banknotes/coins that the total can be split into.
-     * @return A LinkedHashMap containing the amount of all banknotes/coins the total has been split into.
+     * @return A Map containing the amount of all banknotes/coins the total has been split into.
      */
-    public LinkedHashMap<String, Integer> split(BigDecimal total, List<BigDecimal> currencyValues) {
-        var map = new LinkedHashMap<String, Integer>();
+    public Map<String, Integer> split(BigDecimal total, List<BigDecimal> currencyValues) {
+        var map = new HashMap<String, Integer>();
         Optional<BigDecimal> remainder = Optional.empty();
         
         for (BigDecimal currencyValue : currencyValues) {
