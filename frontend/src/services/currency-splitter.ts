@@ -20,8 +20,9 @@ export class CurrencySplitter {
    * @returns An Observable of an object containing the amount of all banknotes/coins the total has been split into.
    */
   public split(total: number): Observable<SplitResult> {
-    const remote = this.globalState.splitResultSource() === 'backend';
-    return remote ? this.splitRemotely(total) : this.splitLocally(total);
+    return this.globalState.calculateLocally()
+      ? this.splitLocally(total)
+      : this.splitRemotely(total);
   }
 
   private splitRemotely(total: number): Observable<SplitResult> {

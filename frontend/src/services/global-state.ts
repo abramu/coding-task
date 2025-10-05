@@ -1,12 +1,10 @@
 import { Injectable, signal } from '@angular/core';
 
-export type SplitResultSource = 'backend' | 'frontend';
-
 @Injectable({ providedIn: 'root' })
 export class GlobalState {
-  public splitResultSource = signal<SplitResultSource>('backend');
+  public calculateLocally = signal(false);
 
-  public setSplitResultSource(newValue: SplitResultSource) {
-    this.splitResultSource.set(newValue);
+  public setCalculateLocally(newValue: boolean) {
+    this.calculateLocally.set(newValue);
   }
 }
