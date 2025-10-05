@@ -1,10 +1,16 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, effect, inject, signal, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-import { MatTableModule } from '@angular/material/table';
+import { MatTable, MatTableModule } from '@angular/material/table';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { GlobalState } from '../services/global-state';
+import { CurrencySplitter } from '../services/currency-splitter';
+
+type TableRow = {
+  currencyValue: number;
+  amount: number;
+};
 
 @Component({
   selector: 'app-root',
@@ -13,13 +19,43 @@ import { GlobalState } from '../services/global-state';
   styleUrl: './app.scss',
 })
 export class App {
-  protected currentResult = [{ currencyValue: 20, amount: 1 }];
-  protected readonly columnsToDisplay = ['currencyValue', 'amount'];
-  protected globalSate = inject(GlobalState);
+  @ViewChild(MatTable)
+  table!: MatTable<TableRow>;
+
+  globalSate = inject(GlobalState);
+  currencySplitter = inject(CurrencySplitter);
+
+  total = signal<number | undefined>(undefined);
+  currentSplit: TableRow[] = [];
+  readonly columnsToDisplay: Array<keyof TableRow> = ['currencyValue', 'amount'];
 
   constructor() {
     effect(() => {
-      console.log(`Calculate locally: ${this.globalSate.calculateLocally()}`);
+      this.total(); // Specify signal to watch
+      this.updateTable();
     });
+    effect(() => {
+      this.globalSate.calculateLocally(); // Specify signal to watch
+      this.updateTable();
+    });
+  }
+
+  private updateTable() {
+    if (Number.isFinite(this.total())) {
+      this.currencySplitter.split(this.total()!).subscribe({
+        next: (result) => {
+          this.currentSplit = Object.entries(result).map((entry) => {
+            return {
+              currencyValue: Number.parseFloat(entry[0]),
+              amount: entry[1],
+            };
+          });
+          this.table.renderRows();
+        },
+        error: (err) => {
+          alert(err.message);
+        },
+      });
+    }
   }
 }

@@ -12,6 +12,16 @@ main {
 
   input {
     text-align: right;
+
+    // Hide up and down arrow buttons
+    &[type='number'] {
+      ::-webkit-outer-spin-button,
+      ::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      -moz-appearance: textfield;
+    }
   }
 }
 
