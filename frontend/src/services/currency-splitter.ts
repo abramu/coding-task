@@ -43,7 +43,7 @@ export class CurrencySplitter {
 
       if (quotient > 0) {
         result[currencyValue] = quotient;
-        remainder = dividend % currencyValue;
+        remainder = Number((dividend % currencyValue).toFixed(2));
       }
     }
 
