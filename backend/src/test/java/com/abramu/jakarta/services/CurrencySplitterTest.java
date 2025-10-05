@@ -19,7 +19,15 @@ class CurrencySplitterTest {
             new BigDecimal("143.59"),
             asBigDecimals("200", "100", "50", "20", "10", "5", "2", "1", "0.5", "0.2", "0.1", "0.05", "0.02", "0.01")
         );
-        var expected = Map.of("100", 1, "20", 2, "2", 1, "1", 1, "0.5", 1, "0.05", 1, "0.02", 2);
+        var expected = Map.of(
+            new BigDecimal("100"), 1,
+            new BigDecimal("20"), 2,
+            new BigDecimal("2"), 1,
+            new BigDecimal("1"), 1,
+            new BigDecimal("0.5"), 1,
+            new BigDecimal("0.05"), 1,
+            new BigDecimal("0.02"), 2
+        );
         assertEquals(expected, result);
 
         result = currencySplitter.split(

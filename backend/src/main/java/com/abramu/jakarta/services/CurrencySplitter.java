@@ -21,8 +21,8 @@ public class CurrencySplitter {
      * @param currencyValues All values of the banknotes/coins that the total can be split into.
      * @return A Map containing the amount of all banknotes/coins the total has been split into.
      */
-    public Map<String, Integer> split(BigDecimal total, List<BigDecimal> currencyValues) {
-        var map = new HashMap<String, Integer>();
+    public Map<BigDecimal, Integer> split(BigDecimal total, List<BigDecimal> currencyValues) {
+        var map = new HashMap<BigDecimal, Integer>();
         Optional<BigDecimal> remainder = Optional.empty();
         
         for (BigDecimal currencyValue : currencyValues) {
@@ -32,7 +32,7 @@ public class CurrencySplitter {
             var newRemainder = result[1];
             
             if (quotient > 0) {
-                map.put(currencyValue.toString(), quotient);
+                map.put(currencyValue, quotient);
                 remainder = Optional.of(newRemainder);
             }
         }

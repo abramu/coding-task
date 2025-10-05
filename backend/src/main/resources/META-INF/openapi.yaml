@@ -12,6 +12,10 @@ paths:
           in: query
           schema:
             type: number
+            maximum: 1000000.00
+            minimum: 0.01
+            pattern: "^\\d{1,7}([.]\\d{1,2})?$"
+          required: true
       responses:
         "200":
           description: OK
