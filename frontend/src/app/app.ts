@@ -23,10 +23,12 @@ export class App {
   currencySplitter = inject(CurrencySplitter);
 
   input = viewChild<ElementRef<HTMLInputElement>>('input');
-  tableCurrent = viewChild<MatTable<TableRow>>('tableCurrent');
+  table = viewChild<MatTable<TableRow>>('table');
+  deltaTable = viewChild<MatTable<TableRow>>('deltaTable');
 
   total = signal<number | null>(null);
-  currentSplit: TableRow[] = [];
+  tableRows: TableRow[] = [];
+  deltaTableRows: TableRow[] = [];
   readonly columnsToDisplay: Array<keyof TableRow> = ['currencyValue', 'amount'];
 
   constructor() {
@@ -44,15 +46,15 @@ export class App {
     if (this.input()?.nativeElement.validity.valid && Number.isFinite(this.total())) {
       this.currencySplitter.split(this.total()!).subscribe({
         next: (result) => {
-          this.currentSplit = Object.entries(result)
+          this.tableRows = Object.entries(result)
             .map((entry) => {
               return {
                 currencyValue: Number.parseFloat(entry[0]),
                 amount: entry[1],
               };
             })
-            .sort((a, b) => b.currencyValue - a.currencyValue);
-          this.tableCurrent()?.renderRows();
+            .sort((a, b) => b.currencyValue - a.currencyValue); // Descending order
+          this.table()?.renderRows();
         },
         error: (err) => {
           alert(err.message);

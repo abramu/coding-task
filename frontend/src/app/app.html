@@ -14,7 +14,7 @@
       />
       <span matTextSuffix>€</span>
     </mat-form-field>
-    <table #tableCurrent mat-table [dataSource]="currentSplit">
+    <table #table mat-table [dataSource]="tableRows">
       <ng-container matColumnDef="currencyValue">
         <th mat-header-cell *matHeaderCellDef>Schein/Münze</th>
         <td mat-cell *matCellDef="let element">{{ element.currencyValue }}</td>
@@ -33,7 +33,7 @@
       <input type="number" matInput disabled maxlength="10" />
       <span matTextSuffix>€</span>
     </mat-form-field>
-    <table mat-table [dataSource]="currentSplit">
+    <table #deltaTable mat-table [dataSource]="deltaTableRows">
       <ng-container matColumnDef="currencyValue">
         <th mat-header-cell *matHeaderCellDef>Schein/Münze</th>
         <td mat-cell *matCellDef="let element">{{ element.currencyValue }}</td>

@@ -43,6 +43,7 @@ export class CurrencySplitter {
 
       if (quotient > 0) {
         result[currencyValue] = quotient;
+        // Cast to two decimal point number in order to avoid rounding errors
         remainder = Number((dividend % currencyValue).toFixed(2));
       }
     }
