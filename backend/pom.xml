@@ -17,10 +17,11 @@
         <maven.compiler.release>21</maven.compiler.release>
         <jakartaee-api.version>10.0.0</jakartaee-api.version>
         <wildfly.version>35.0.1.Final</wildfly.version>
+        <microprofile.version>3.1</microprofile.version>
+        <junit.version>6.0.0</junit.version>
         <compiler-plugin.version>3.13.0</compiler-plugin.version>
         <war-plugin.version>3.4.0</war-plugin.version>
         <wildfly-plugin.version>5.0.1.Final</wildfly-plugin.version>
-        <microprofile.version>3.1</microprofile.version>
         <surefire-plugin.version>3.5.4</surefire-plugin.version>
     </properties>
 
@@ -38,9 +39,15 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.eclipse.microprofile.openapi</groupId>
+            <artifactId>microprofile-openapi-api</artifactId>
+            <version>${microprofile.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>6.0.0</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -63,8 +70,6 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire-plugin.version}</version>
             </plugin>
-
-            <!-- Execute 'mvn clean package wildfly:dev' to run the application. -->
             <plugin>
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
@@ -72,6 +77,12 @@
                 <configuration>
                     <version>${wildfly.version}</version>
                     <server-config>standalone.xml</server-config>
+                    <discover-provisioning-info>
+                        <version>${wildfly.version}</version>
+                        <add-ons>
+                            <add-on>openapi</add-on>
+                        </add-ons>
+                    </discover-provisioning-info>
                 </configuration>
             </plugin>
         </plugins>

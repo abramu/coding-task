@@ -1,0 +1,37 @@
+---
+openapi: 3.1.0
+info:
+  description: Generated OpenAPI documentation
+  title: coding-task-backend API
+  version: 0.0.1
+paths:
+  /api/split:
+    get:
+      parameters:
+        - name: total
+          in: query
+          schema:
+            type: number
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: integer
+                  format: int32
+  /api/values:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: number
+servers:
+  - url: /coding-task-backend

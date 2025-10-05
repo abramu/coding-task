@@ -15,6 +15,7 @@ import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 
 @Path("")
+@Produces({ MediaType.APPLICATION_JSON })
 public class Endpoints {
 
     @Inject
@@ -24,14 +25,12 @@ public class Endpoints {
     private CurrencySplitter currencySplitter;
 
     @GET
-    @Produces({ MediaType.APPLICATION_JSON })
     @Path("values")
     public List<BigDecimal> getCurrencyValues() {
         return currencyValues.getValues();
     }
 
     @GET
-    @Produces({ MediaType.APPLICATION_JSON })
     @Path("split")
     public Map<String, Integer> splitTotal(@QueryParam("total") BigDecimal total) {
         return currencySplitter.split(total, getCurrencyValues());
