@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "generate": "openapi-generator-cli generate -g typescript-angular -i ../backend/src/main/resources/META-INF/openapi.yaml -o src/openapi",
+    "build": "generate && ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -38,6 +39,7 @@
     "@angular/build": "^20.3.4",
     "@angular/cli": "^20.3.4",
     "@angular/compiler-cli": "^20.3.0",
+    "@openapitools/openapi-generator-cli": "^2.24.0",
     "@types/jasmine": "~5.1.0",
     "jasmine-core": "~5.9.0",
     "karma": "~6.4.0",
