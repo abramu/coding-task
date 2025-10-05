@@ -1,7 +1,6 @@
 package com.abramu.jakarta.rest;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Map;
 
 import com.abramu.jakarta.services.CurrencySplitter;
@@ -18,9 +17,8 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 
-@Path("")
-@Produces({ MediaType.APPLICATION_JSON })
-public class Endpoints {
+@Path("split")
+public class CalculationResource {
 
     @Inject
     private CurrencyValues currencyValues;
@@ -29,21 +27,15 @@ public class Endpoints {
     private CurrencySplitter currencySplitter;
 
     @GET
-    @Path("values")
-    public List<BigDecimal> getCurrencyValues() {
-        return currencyValues.getValues();
-    }
-
-    @GET
-    @Path("split")
+    @Produces({ MediaType.APPLICATION_JSON })
     public Map<BigDecimal, Integer> splitTotal(
         @NotNull
         @Digits(integer=7, fraction=2)
         @DecimalMin("0.01")
-        @DecimalMax("1000000.00")
+        @DecimalMax("1000000")
         @QueryParam("total")
         BigDecimal total
     ) {
-        return currencySplitter.split(total, getCurrencyValues());
+        return currencySplitter.split(total, currencyValues.getValues());
     }
 }

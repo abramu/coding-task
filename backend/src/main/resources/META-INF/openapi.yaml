@@ -12,9 +12,9 @@ paths:
           in: query
           schema:
             type: number
-            maximum: 1000000.00
-            minimum: 0.01
             pattern: "^\\d{1,7}([.]\\d{1,2})?$"
+            maximum: 1000000
+            minimum: 0.01
           required: true
       responses:
         "200":
@@ -26,16 +26,3 @@ paths:
                 additionalProperties:
                   type: integer
                   format: int32
-  /api/values:
-    get:
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: number
-servers:
-  - url: /coding-task-backend

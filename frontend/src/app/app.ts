@@ -23,7 +23,7 @@ export class App {
   currencySplitter = inject(CurrencySplitter);
 
   input = viewChild<ElementRef<HTMLInputElement>>('input');
-  tableCurrent = viewChild<ElementRef<MatTable<TableRow>>>('tableCurrent');
+  tableCurrent = viewChild<MatTable<TableRow>>('tableCurrent');
 
   total = signal<number | null>(null);
   currentSplit: TableRow[] = [];
@@ -44,13 +44,15 @@ export class App {
     if (this.input()?.nativeElement.validity.valid && Number.isFinite(this.total())) {
       this.currencySplitter.split(this.total()!).subscribe({
         next: (result) => {
-          this.currentSplit = Object.entries(result).map((entry) => {
-            return {
-              currencyValue: Number.parseFloat(entry[0]),
-              amount: entry[1],
-            };
-          });
-          this.tableCurrent()?.nativeElement.renderRows();
+          this.currentSplit = Object.entries(result)
+            .map((entry) => {
+              return {
+                currencyValue: Number.parseFloat(entry[0]),
+                amount: entry[1],
+              };
+            })
+            .sort((a, b) => b.currencyValue - a.currencyValue);
+          this.tableCurrent()?.renderRows();
         },
         error: (err) => {
           alert(err.message);

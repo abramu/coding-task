@@ -1,7 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { DefaultService } from '../openapi';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { GlobalState } from './global-state';
+import { environment } from '../environments/environment';
 
 export type SplitResult = { [key: string]: number };
 
@@ -9,7 +10,6 @@ export type SplitResult = { [key: string]: number };
 export class CurrencySplitter {
   private globalState = inject(GlobalState);
   private api = inject(DefaultService);
-  private currencyValues = this.api.apiValuesGet();
 
   /**
    * Optimally splits a provided sum of money into banknotes and coins.
@@ -23,31 +23,30 @@ export class CurrencySplitter {
   public split(total: number): Observable<SplitResult> {
     return this.globalState.calculateRemotely()
       ? this.splitRemotely(total)
-      : this.splitLocally(total);
+      : new Observable((subscriber) => {
+          subscriber.next(this.splitLocally(total));
+          subscriber.complete();
+        });
   }
 
   private splitRemotely(total: number): Observable<SplitResult> {
     return this.api.apiSplitGet(total);
   }
 
-  private splitLocally(total: number): Observable<SplitResult> {
-    return this.currencyValues.pipe(
-      map((values) => {
-        const result: SplitResult = {};
-        let remainder: number | undefined = undefined;
+  private splitLocally(total: number): SplitResult {
+    const result: SplitResult = {};
+    let remainder: number | undefined = undefined;
 
-        for (const value of values) {
-          const dividend: number = remainder ?? total;
-          const quotient = Math.floor(dividend / value);
+    for (const currencyValue of environment.currencyValues) {
+      const dividend: number = remainder ?? total;
+      const quotient = Math.floor(dividend / currencyValue);
 
-          if (quotient > 0) {
-            result[value] = quotient;
-            remainder = dividend % value;
-          }
-        }
+      if (quotient > 0) {
+        result[currencyValue] = quotient;
+        remainder = dividend % currencyValue;
+      }
+    }
 
-        return result;
-      })
-    );
+    return result;
   }
 }
