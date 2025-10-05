@@ -6,6 +6,7 @@ import {
 import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { provideApi } from '../openapi/provide-api';
+import { environment } from '../environments/environment';
 
 import { routes } from './app.routes';
 
@@ -15,6 +16,6 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(),
-    provideApi('http://localhost:8080'),
+    provideApi(environment.basePath),
   ],
 };
