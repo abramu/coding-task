@@ -15,14 +15,15 @@ export class CurrencySplitter {
    * Optimally splits a provided sum of money into banknotes and coins.
    * The result is an object with the required banknote/coin values as keys.
    * The associated value is the required amount of that specific banknote/coin.
+   * The calculation happens either on the spot or at the backend, depending on globalState.calculateRemotely.
    *
    * @param total The sum of money to be split.
    * @returns An Observable of an object containing the amount of all banknotes/coins the total has been split into.
    */
   public split(total: number): Observable<SplitResult> {
-    return this.globalState.calculateLocally()
-      ? this.splitLocally(total)
-      : this.splitRemotely(total);
+    return this.globalState.calculateRemotely()
+      ? this.splitRemotely(total)
+      : this.splitLocally(total);
   }
 
   private splitRemotely(total: number): Observable<SplitResult> {

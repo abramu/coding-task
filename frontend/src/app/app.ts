@@ -35,7 +35,7 @@ export class App {
       this.updateTable();
     });
     effect(() => {
-      this.globalSate.calculateLocally(); // Specify signal to watch
+      this.globalSate.calculateRemotely(); // Specify signal to watch
       this.updateTable();
     });
   }
