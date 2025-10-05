@@ -1,4 +1,4 @@
-import { Component, effect, inject, signal, ViewChild } from '@angular/core';
+import { Component, effect, ElementRef, inject, signal, viewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -19,13 +19,13 @@ type TableRow = {
   styleUrl: './app.scss',
 })
 export class App {
-  @ViewChild(MatTable)
-  table!: MatTable<TableRow>;
-
   globalSate = inject(GlobalState);
   currencySplitter = inject(CurrencySplitter);
 
-  total = signal<number | undefined>(undefined);
+  input = viewChild<ElementRef<HTMLInputElement>>('input');
+  tableCurrent = viewChild<ElementRef<MatTable<TableRow>>>('tableCurrent');
+
+  total = signal<number | null>(null);
   currentSplit: TableRow[] = [];
   readonly columnsToDisplay: Array<keyof TableRow> = ['currencyValue', 'amount'];
 
@@ -41,7 +41,7 @@ export class App {
   }
 
   private updateTable() {
-    if (Number.isFinite(this.total())) {
+    if (this.input()?.nativeElement.validity.valid && Number.isFinite(this.total())) {
       this.currencySplitter.split(this.total()!).subscribe({
         next: (result) => {
           this.currentSplit = Object.entries(result).map((entry) => {
@@ -50,7 +50,7 @@ export class App {
               amount: entry[1],
             };
           });
-          this.table.renderRows();
+          this.tableCurrent()?.nativeElement.renderRows();
         },
         error: (err) => {
           alert(err.message);
