@@ -49,7 +49,7 @@
 </main>
 <footer>
   <button (click)="calculate()" matButton="filled">Berechnen</button>
-  <mat-slide-toggle (change)="calculate()" [(ngModel)]="globalState.calculateRemotely">
+  <mat-slide-toggle [(ngModel)]="globalState.calculateRemotely">
     Im Backend berechnen
   </mat-slide-toggle>
 </footer>
