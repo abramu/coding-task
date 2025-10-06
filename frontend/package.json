@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "generate": "openapi-generator-cli generate -g typescript-angular -i ../backend/src/main/resources/META-INF/openapi.yaml -o src/openapi",
-    "build": "generate && ng build",
+    "build": "npm run generate && ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

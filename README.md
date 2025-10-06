@@ -15,6 +15,7 @@ Requires:
 cd frontend
 npm install
 npm build
+mkdir -p ../backend/src/main/webapp
 cp dist/coding-task-frontend/browser/* ../backend/src/main/webapp
 cd ../backend
 mvn clean package wildfly:run
