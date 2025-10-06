@@ -22,14 +22,14 @@ public class CurrencySplitter {
      * @return A Map containing the amount of all banknotes/coins the total has been split into.
      */
     public Map<BigDecimal, Integer> split(BigDecimal total, List<BigDecimal> currencyValues) {
-        var map = new HashMap<BigDecimal, Integer>();
+        final var map = new HashMap<BigDecimal, Integer>();
         Optional<BigDecimal> remainder = Optional.empty();
         
-        for (BigDecimal currencyValue : currencyValues) {
-            var dividend = remainder.orElse(total);
-            var result = dividend.divideAndRemainder(currencyValue);
-            var quotient = result[0].intValue();
-            var newRemainder = result[1];
+        for (var currencyValue : currencyValues) {
+            final var dividend = remainder.orElse(total);
+            final var result = dividend.divideAndRemainder(currencyValue);
+            final var quotient = result[0].intValue();
+            final var newRemainder = result[1];
             
             if (quotient > 0) {
                 map.put(currencyValue, quotient);
