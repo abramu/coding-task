@@ -40,13 +40,13 @@ export class App {
   deltaTable = viewChild<MatTable<TableRow>>('deltaTable');
 
   total = signal<number | null>(null);
+  previousTotal = signal<number | null>(null);
   cachedTotal: number | null = null;
   cachedSplitResult: SplitResult = {};
-  previousTotal = signal<number | null>(null);
   firstCalculationDone = false;
   tableRows: TableRow[] = [];
-  previousTableRows: TableRow[] = [];
   deltaTableRows: DeltaTableRow[] = [];
+
   readonly columnsToDisplay: Array<keyof TableRow> = ['currencyValue', 'amount'];
   readonly deltaColumnsToDisplay: Array<keyof DeltaTableRow> = ['currencyValue', 'delta'];
 
@@ -54,8 +54,6 @@ export class App {
     if (this.input()?.nativeElement.validity.valid && Number.isFinite(this.total())) {
       this.currencySplitter.split(this.total()!).subscribe({
         next: (result) => {
-          this.previousTableRows = this.tableRows;
-
           this.tableRows = Object.entries(result)
             .map((entry) => {
               return {
